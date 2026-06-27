@@ -289,7 +289,7 @@
     <h1 class="page-title">Begin with a<br><em>conversation.</em></h1>
     <p class="page-sub">All consultations are complimentary and without obligation.<br>We'll be in touch within 24 hours.</p>
 
-    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form id="contact-form">
 
       <div class="field">
         <label for="name">Full name</label>
@@ -352,20 +352,37 @@
 
   const form = document.getElementById('contact-form');
   const success = document.getElementById('success');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = new FormData(form);
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-    if (res.ok) {
-      form.style.display = 'none';
-      success.style.display = 'block';
-    } else {
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+
+    const data = {
+      name:    form.name.value,
+      email:   form.email.value,
+      phone:   form.phone.value,
+      service: form.service.value,
+      message: form.message.value,
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error();
+      }
+    } catch {
       alert('Something went wrong. Please email us directly at hello@subtl.co.uk');
+      submitBtn.textContent = 'Send Enquiry';
+      submitBtn.disabled = false;
     }
   });
 </script>
