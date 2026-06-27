@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>subtl. — Contact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100%;
+    background: #0a0a0a;
+    color: #f0ece4;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    cursor: none;
+  }
+
+  #cursor {
+    position: fixed;
+    width: 5px; height: 5px;
+    background: #f0ece4;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    mix-blend-mode: difference;
+    transition: width .3s cubic-bezier(.16,1,.3,1), height .3s cubic-bezier(.16,1,.3,1);
+  }
+  #cursor.hover { width: 22px; height: 22px; opacity: .45; }
+
+  .rule-top, .rule-bottom {
+    position: fixed;
+    left: 0;
+    height: 1px;
+    background: #1e1d1b;
+    width: 0;
+    animation: ruleGrow 1.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .rule-top    { top: 0;    animation-delay: .1s; }
+  .rule-bottom { bottom: 0; animation-delay: .3s; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 2.8rem;
+    background: rgba(10,10,10,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e1d1b;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: .52em;
+    color: #f0ece4;
+    text-decoration: none;
+    opacity: 0;
+    animation: fadeIn .6s .2s forwards;
+  }
+
+  .nav-back {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .24em;
+    color: #7a776f;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color .25s;
+    opacity: 0;
+    animation: fadeIn .6s .4s forwards;
+  }
+  .nav-back:hover { color: #f0ece4; }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2.4rem 6rem;
+  }
+
+  .contact-wrap {
+    width: 100%;
+    max-width: 580px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 1s cubic-bezier(.16,1,.3,1) .5s forwards;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .36em;
+    color: #7a776f;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: .02em;
+    margin-bottom: .8rem;
+  }
+  .page-title em { font-style: italic; color: #cdc7b8; }
+
+  .page-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: .66rem;
+    letter-spacing: .18em;
+    color: #7a776f;
+    line-height: 1.9;
+    margin-bottom: 3.2rem;
+  }
+
+  /* ── FORM ── */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .field {
+    position: relative;
+    border-bottom: 1px solid #1e1d1b;
+    transition: border-color .3s;
+  }
+  .field:focus-within { border-color: #7a776f; }
+
+  .field label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: .56rem;
+    letter-spacing: .28em;
+    color: #3a3834;
+    text-transform: uppercase;
+    padding-top: 1.4rem;
+    transition: color .3s;
+  }
+  .field:focus-within label { color: #7a776f; }
+
+  .field input,
+  .field select,
+  .field textarea {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f0ece4;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: .02em;
+    padding: .4rem 0 1rem;
+    resize: none;
+  }
+
+  .field select {
+    appearance: none;
+    cursor: pointer;
+  }
+  .field select option { background: #0a0a0a; }
+
+  .field textarea { min-height: 100px; line-height: 1.6; }
+
+  .field input::placeholder,
+  .field textarea::placeholder { color: #3a3834; }
+
+  /* submit row */
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.8rem;
+    gap: 1rem;
+  }
+
+  .form-note {
+    font-family: 'DM Mono', monospace;
+    font-size: .56rem;
+    letter-spacing: .16em;
+    color: #3a3834;
+    line-height: 1.8;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: .9rem 2.6rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background .25s, color .25s;
+    white-space: nowrap;
+  }
+  .btn-solid {
+    background: #f0ece4;
+    color: #0a0a0a;
+    border: 1px solid #f0ece4;
+  }
+  .btn-solid:hover { background: #cdc7b8; border-color: #cdc7b8; }
+
+  /* success state */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .success-msg .tick {
+    font-size: 2rem;
+    color: #cdc7b8;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .success-msg p {
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-bottom: .6rem;
+  }
+  .success-msg span {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .2em;
+    color: #7a776f;
+  }
+
+  /* corner labels */
+  .corner-left, .corner-right {
+    position: fixed;
+    bottom: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .9rem;
+    letter-spacing: .2em;
+    color: #7a776f;
+    opacity: 0;
+    animation: fadeIn .8s 1.4s forwards;
+  }
+  .corner-left  { left: 2.4rem; }
+  .corner-right { right: 2.4rem; }
+
+  @keyframes ruleGrow { to { width: 100%; } }
+  @keyframes fadeIn   { to { opacity: 1; } }
+  @keyframes rise     { to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 600px) {
+    nav { padding: 1.4rem 1.4rem; }
+    .form-footer { flex-direction: column; align-items: flex-start; }
+    .corner-left, .corner-right { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+    .rule-top, .rule-bottom { width: 100%; }
+    .contact-wrap, .nav-logo, .nav-back { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div class="rule-top"></div>
+<div class="rule-bottom"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">s u b t l .</a>
+  <a href="index.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="page">
+  <div class="contact-wrap">
+    <span class="eyebrow">Get in touch</span>
+    <h1 class="page-title">Begin with a<br><em>conversation.</em></h1>
+    <p class="page-sub">All consultations are complimentary and without obligation.<br>We'll be in touch within 24 hours.</p>
+
+    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone (optional)</label>
+        <input type="tel" id="phone" name="phone" placeholder="+44 7700 000000">
+      </div>
+
+      <div class="field">
+        <label for="service">Service of interest</label>
+        <select id="service" name="service" required>
+          <option value="" disabled selected>Select a service</option>
+          <option value="smp">Scalp Micropigmentation</option>
+          <option value="hair">Hair &amp; Scalp Treatments</option>
+          <option value="beauty">Advanced Beauty</option>
+          <option value="general">General Enquiry</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us a little about what you're looking for…" required></textarea>
+      </div>
+
+      <div class="form-footer">
+        <p class="form-note">By submitting you agree to us<br>contacting you about your enquiry.</p>
+        <button type="submit" class="btn btn-solid">Send Enquiry</button>
+      </div>
+    </form>
+
+    <div class="success-msg" id="success">
+      <span class="tick">✦</span>
+      <p>Thank you. We'll be in touch.</p>
+      <span>Expect a reply within 24 hours.</span>
+    </div>
+  </div>
+</div>
+
+<span class="corner-left">subtl.co.uk</span>
+<span class="corner-right">hello@subtl.co.uk</span>
+
+<script>
+  const cur = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+  });
+
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('success');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      alert('Something went wrong. Please email us directly at hello@subtl.co.uk');
+    }
+  });
+</script>
+</body>
+</html>
