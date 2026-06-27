@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        sender: { name: 'subtl. Website', email: 'hello@subtl.co.uk' },
+        sender: { name: 'subtl. Website', email: 'noreply@subtl.co.uk' },
         to: [{ email: process.env.CONTACT_EMAIL || 'hello@subtl.co.uk', name: 'subtl.' }],
         replyTo: { email, name },
         subject: `New enquiry — ${serviceLabels[service] || service}`,
