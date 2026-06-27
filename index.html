@@ -56,14 +56,19 @@
   }
 
   .logo {
+    position: fixed;
+    top: 2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: 'DM Mono', monospace;
-    font-size: .65rem;
+    font-size: 1rem;
     letter-spacing: .52em;
-    color: #7a776f;
+    color: #f0ece4;
     margin-right: -.52em;
     opacity: 0;
     animation: fadeIn 1s cubic-bezier(.16,1,.3,1) .4s forwards;
-    margin-bottom: 3.6rem;
+    z-index: 100;
+    white-space: nowrap;
   }
 
   .headline {
@@ -122,8 +127,9 @@
 <div class="rule-top"></div>
 <div class="rule-bottom"></div>
 
+<p class="logo">s u b t l .</p>
+
 <div class="stage">
-  <p class="logo">s u b t l .</p>
   <h1 class="headline">Coming <em>soon.</em></h1>
   <p class="sub">Wyke, Bradford &nbsp;·&nbsp; 2026</p>
   <p class="sub" style="margin-top:.9rem;animation-delay:1.8s">Appointments available from mid-August</p>
