@@ -118,7 +118,8 @@
     font-size: 2.4rem;
     letter-spacing: .52em;
     color: #f0ece4;
-    margin-right: -.52em;
+    width: 100%;
+    text-align: center;
     margin-bottom: 1.6rem;
     opacity: 0;
     animation: fadeUp 1.6s cubic-bezier(.22,1,.36,1) .3s forwards;
@@ -130,6 +131,8 @@
     letter-spacing: .2em;
     color: #b0aca2;
     text-transform: uppercase;
+    width: 100%;
+    text-align: center;
     margin-bottom: 3.2rem;
     opacity: 0;
     animation: fadeUp 1.6s cubic-bezier(.22,1,.36,1) .7s forwards;
@@ -140,6 +143,8 @@
     font-weight: 300;
     letter-spacing: .04em;
     line-height: 1.1;
+    width: 100%;
+    text-align: center;
     opacity: 0;
     animation: fadeUp 1.8s cubic-bezier(.22,1,.36,1) 1s forwards;
   }
@@ -155,6 +160,8 @@
     letter-spacing: .34em;
     color: #b0aca2;
     text-transform: uppercase;
+    width: 100%;
+    text-align: center;
     opacity: 0;
     animation: fadeUp 1.6s cubic-bezier(.22,1,.36,1) 1.5s forwards;
   }
@@ -203,28 +210,9 @@
   /* ── TABLET ── */
   @media (max-width: 768px) {
     .stage { padding: 0 2.4rem; }
-
-    .logo {
-      font-size: 1.8rem;
-      letter-spacing: .44em;
-      margin-right: -.44em;
-      margin-bottom: 1.2rem;
-    }
-    .services-line {
-      font-size: .72rem;
-      letter-spacing: .14em;
-      margin-right: 0;
-      margin-bottom: 2.4rem;
-      max-width: 100%;
-      word-break: break-word;
-    }
-    .sub {
-      font-size: .78rem;
-      letter-spacing: .18em;
-      margin-right: 0;
-      margin-top: 1.2rem;
-      max-width: 100%;
-    }
+    .logo { font-size: 1.8rem; margin-bottom: 1.2rem; }
+    .services-line { font-size: .72rem; letter-spacing: .14em; margin-bottom: 2.4rem; }
+    .sub { font-size: .78rem; letter-spacing: .18em; margin-top: 1.2rem; }
     .btn { margin-top: 2rem; padding: .85rem 2rem; }
     .corner-left, .corner-right { font-size: .7rem; letter-spacing: .12em; }
     .corner-bracket { width: 26px; height: 26px; }
@@ -234,43 +222,12 @@
   @media (max-width: 480px) {
     html, body { cursor: auto; }
     #cursor { display: none; }
-
-    .stage {
-      padding: 0 1.6rem;
-      height: 100vh;
-    }
-
-    .logo {
-      font-size: 1.2rem;
-      letter-spacing: .4em;
-      margin-right: -.4em;
-      margin-bottom: .9rem;
-    }
-    .services-line {
-      font-size: .56rem;
-      letter-spacing: .08em;
-      margin-right: 0;
-      margin-bottom: 1.8rem;
-      line-height: 2;
-      max-width: 100%;
-    }
-    .headline {
-      font-size: clamp(2rem, 11vw, 3rem);
-      width: 100%;
-    }
-    .sub {
-      font-size: .62rem;
-      letter-spacing: .12em;
-      margin-right: 0;
-      margin-top: 1rem;
-      max-width: 100%;
-      line-height: 1.8;
-    }
-    .btn {
-      margin-top: 1.8rem;
-      padding: .8rem 1.8rem;
-      font-size: .56rem;
-    }
+    .stage { padding: 0 1.6rem; height: 100vh; }
+    .logo { font-size: 1.2rem; letter-spacing: .36em; margin-bottom: .9rem; }
+    .services-line { font-size: .56rem; letter-spacing: .08em; margin-bottom: 1.8rem; line-height: 2; }
+    .headline { font-size: clamp(2rem, 11vw, 3rem); }
+    .sub { font-size: .62rem; letter-spacing: .12em; margin-top: 1rem; line-height: 1.8; }
+    .btn { margin-top: 1.8rem; padding: .8rem 1.8rem; font-size: .56rem; }
     .corner-left  { left: 1.2rem; font-size: .58rem; letter-spacing: .08em; }
     .corner-right { right: 1.2rem; font-size: .58rem; letter-spacing: .08em; }
     .corner-bracket { display: none; }
