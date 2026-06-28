@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const serviceLabels = {
     smp: 'Scalp Micropigmentation',
     hair: 'Hair & Scalp Treatments',
-    beauty: 'Advanced Beauty',
+    beauty: 'Consultation',
     general: 'General Enquiry',
   };
 
