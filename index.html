@@ -109,6 +109,8 @@
     text-align: center;
     position: relative;
     z-index: 1;
+    padding: 0 2rem;
+    width: 100%;
   }
 
   .logo {
@@ -200,62 +202,81 @@
 
   /* ── TABLET ── */
   @media (max-width: 768px) {
+    .stage { padding: 0 2.4rem; }
+
     .logo {
       font-size: 1.8rem;
+      letter-spacing: .44em;
+      margin-right: -.44em;
       margin-bottom: 1.2rem;
     }
     .services-line {
       font-size: .72rem;
       letter-spacing: .14em;
+      margin-right: 0;
       margin-bottom: 2.4rem;
+      max-width: 100%;
+      word-break: break-word;
     }
     .sub {
       font-size: .78rem;
-      letter-spacing: .22em;
+      letter-spacing: .18em;
+      margin-right: 0;
       margin-top: 1.2rem;
+      max-width: 100%;
     }
-    .btn {
-      margin-top: 2rem;
-      padding: .85rem 2rem;
-    }
-    .corner-left, .corner-right {
-      font-size: .7rem;
-      letter-spacing: .14em;
-    }
+    .btn { margin-top: 2rem; padding: .85rem 2rem; }
+    .corner-left, .corner-right { font-size: .7rem; letter-spacing: .12em; }
     .corner-bracket { width: 26px; height: 26px; }
   }
 
   /* ── MOBILE ── */
   @media (max-width: 480px) {
-    html, body { cursor: auto; }
+    html, body { cursor: auto; overflow-y: auto; }
     #cursor { display: none; }
 
+    .stage {
+      padding: 0 1.6rem;
+      justify-content: center;
+      min-height: 100vh;
+      height: auto;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
     .logo {
-      font-size: 1.3rem;
-      letter-spacing: .44em;
-      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      letter-spacing: .4em;
+      margin-right: -.4em;
+      margin-bottom: .9rem;
     }
     .services-line {
-      font-size: .58rem;
-      letter-spacing: .1em;
-      margin-bottom: 2rem;
-      padding: 0 1.2rem;
-      line-height: 1.9;
+      font-size: .56rem;
+      letter-spacing: .08em;
+      margin-right: 0;
+      margin-bottom: 1.8rem;
+      line-height: 2;
+      max-width: 100%;
     }
-    .headline { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+    .headline {
+      font-size: clamp(2rem, 11vw, 3rem);
+      width: 100%;
+    }
     .sub {
-      font-size: .65rem;
-      letter-spacing: .16em;
+      font-size: .62rem;
+      letter-spacing: .12em;
+      margin-right: 0;
       margin-top: 1rem;
-      padding: 0 1rem;
+      max-width: 100%;
+      line-height: 1.8;
     }
     .btn {
       margin-top: 1.8rem;
       padding: .8rem 1.8rem;
       font-size: .56rem;
     }
-    .corner-left  { left: 1.2rem; font-size: .6rem; letter-spacing: .1em; }
-    .corner-right { right: 1.2rem; font-size: .6rem; letter-spacing: .1em; }
+    .corner-left  { left: 1.2rem; font-size: .58rem; letter-spacing: .08em; }
+    .corner-right { right: 1.2rem; font-size: .58rem; letter-spacing: .08em; }
     .corner-bracket { display: none; }
   }
 
