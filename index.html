@@ -31,32 +31,24 @@
     transition: width .4s cubic-bezier(.22,1,.36,1), height .4s cubic-bezier(.22,1,.36,1);
   }
 
-  /* animated dot grid background */
+  /* animated dot grid — fades at edges, slow sweep */
   body::before {
     content: '';
     position: fixed;
     inset: -100px;
-    background-image: radial-gradient(circle, #181714 1px, transparent 1px);
+    background-image: radial-gradient(circle, #1c1a16 1px, transparent 1px);
     background-size: 28px 28px;
     animation: dotDrift 18s linear infinite;
     pointer-events: none;
     z-index: 0;
-  }
-
-  /* slowly drifting ambient gradient */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: -60%;
-    width: 220%;
-    height: 220%;
-    background:
-      radial-gradient(ellipse 55% 45% at 35% 45%, rgba(30,25,16,.55) 0%, transparent 65%),
-      radial-gradient(ellipse 45% 55% at 68% 58%, rgba(22,18,12,.45) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 35% at 55% 20%, rgba(18,15,10,.3) 0%, transparent 55%);
-    animation: gradientDrift 28s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: 0;
+    -webkit-mask-image:
+      radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 85%),
+      linear-gradient(135deg, transparent 0%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.6) 60%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 85%),
+      linear-gradient(135deg, transparent 0%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.6) 60%, transparent 100%);
+    mask-composite: intersect;
   }
 
   /* top & bottom ruled lines */
@@ -199,17 +191,10 @@
   .corner-left  { left: 2.4rem; }
   .corner-right { right: 2.4rem; }
 
-  @keyframes ruleGrow     { to { width: 100%; } }
-  @keyframes fadeIn       { to { opacity: 1; } }
-  @keyframes fadeUp       { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes dotDrift     { to { transform: translate(28px, 28px); } }
-  @keyframes gradientDrift {
-    0%   { transform: translate(0%, 0%); }
-    25%  { transform: translate(4%, -3%); }
-    50%  { transform: translate(-3%, 5%); }
-    75%  { transform: translate(5%, 2%); }
-    100% { transform: translate(-2%, -4%); }
-  }
+  @keyframes ruleGrow { to { width: 100%; } }
+  @keyframes fadeIn   { to { opacity: 1; } }
+  @keyframes fadeUp   { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes dotDrift { to { transform: translate(28px, 28px); } }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; }
