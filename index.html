@@ -198,6 +198,67 @@
   @keyframes fadeUp   { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes dotDrift { to { transform: translate(28px, 28px); } }
 
+  /* ── TABLET ── */
+  @media (max-width: 768px) {
+    .logo {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .services-line {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      margin-bottom: 2.4rem;
+    }
+    .sub {
+      font-size: .78rem;
+      letter-spacing: .22em;
+      margin-top: 1.2rem;
+    }
+    .btn {
+      margin-top: 2rem;
+      padding: .85rem 2rem;
+    }
+    .corner-left, .corner-right {
+      font-size: .7rem;
+      letter-spacing: .14em;
+    }
+    .corner-bracket { width: 26px; height: 26px; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 480px) {
+    html, body { cursor: auto; }
+    #cursor { display: none; }
+
+    .logo {
+      font-size: 1.3rem;
+      letter-spacing: .44em;
+      margin-bottom: 1rem;
+    }
+    .services-line {
+      font-size: .58rem;
+      letter-spacing: .1em;
+      margin-bottom: 2rem;
+      padding: 0 1.2rem;
+      line-height: 1.9;
+    }
+    .headline { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+    .sub {
+      font-size: .65rem;
+      letter-spacing: .16em;
+      margin-top: 1rem;
+      padding: 0 1rem;
+    }
+    .btn {
+      margin-top: 1.8rem;
+      padding: .8rem 1.8rem;
+      font-size: .56rem;
+    }
+    .corner-left  { left: 1.2rem; font-size: .6rem; letter-spacing: .1em; }
+    .corner-right { right: 1.2rem; font-size: .6rem; letter-spacing: .1em; }
+    .corner-bracket { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; }
     .rule-top, .rule-bottom { width: 100%; }
