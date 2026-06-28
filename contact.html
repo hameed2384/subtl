@@ -27,9 +27,29 @@
     z-index: 9999;
     transform: translate(-50%,-50%);
     mix-blend-mode: difference;
-    transition: width .3s cubic-bezier(.16,1,.3,1), height .3s cubic-bezier(.16,1,.3,1);
+    transition: width .4s cubic-bezier(.22,1,.36,1), height .4s cubic-bezier(.22,1,.36,1);
   }
   #cursor.hover { width: 22px; height: 22px; opacity: .45; }
+
+  /* same dot background as index */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: -100px;
+    background-image: radial-gradient(circle, #2e2b24 1px, transparent 1px);
+    background-size: 28px 28px;
+    animation: dotDrift 18s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    -webkit-mask-image:
+      radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 85%),
+      linear-gradient(135deg, transparent 0%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.6) 60%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 85%),
+      linear-gradient(135deg, transparent 0%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.6) 60%, transparent 100%);
+    mask-composite: intersect;
+  }
 
   .rule-top, .rule-bottom {
     position: fixed;
@@ -37,10 +57,11 @@
     height: 1px;
     background: #1e1d1b;
     width: 0;
-    animation: ruleGrow 1.4s cubic-bezier(.16,1,.3,1) forwards;
+    animation: ruleGrow 2s cubic-bezier(.22,1,.36,1) forwards;
+    z-index: 2;
   }
-  .rule-top    { top: 0;    animation-delay: .1s; }
-  .rule-bottom { bottom: 0; animation-delay: .3s; }
+  .rule-top    { top: 0;    animation-delay: .2s; }
+  .rule-bottom { bottom: 0; animation-delay: .5s; }
 
   /* ── NAV ── */
   nav {
@@ -55,7 +76,6 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid #1e1d1b;
   }
-
   .nav-logo {
     font-family: 'DM Mono', monospace;
     font-size: 1rem;
@@ -65,7 +85,6 @@
     opacity: 0;
     animation: fadeIn .6s .2s forwards;
   }
-
   .nav-back {
     font-family: 'DM Mono', monospace;
     font-size: .62rem;
@@ -79,22 +98,24 @@
   }
   .nav-back:hover { color: #f0ece4; }
 
-  /* ── PAGE WRAPPER ── */
+  /* ── PAGE ── */
   .page {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 8rem 2.4rem 6rem;
+    padding: 8rem 5vw 6rem;
+    position: relative;
+    z-index: 1;
+    gap: 6vw;
   }
 
-  .contact-wrap {
-    width: 100%;
-    max-width: 580px;
+  /* ── LEFT: heading ── */
+  .contact-intro {
+    flex: 0 0 38%;
+    max-width: 420px;
     opacity: 0;
     transform: translateY(20px);
-    animation: rise 1s cubic-bezier(.16,1,.3,1) .5s forwards;
+    animation: rise 1.2s cubic-bezier(.22,1,.36,1) .4s forwards;
   }
 
   .eyebrow {
@@ -104,28 +125,34 @@
     color: #7a776f;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
   }
 
   .page-title {
-    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
     font-weight: 300;
-    line-height: 1.12;
+    line-height: 1.1;
     letter-spacing: .02em;
-    margin-bottom: .8rem;
+    margin-bottom: 1.4rem;
   }
   .page-title em { font-style: italic; color: #cdc7b8; }
 
   .page-sub {
     font-family: 'DM Mono', monospace;
-    font-size: .66rem;
-    letter-spacing: .18em;
+    font-size: .68rem;
+    letter-spacing: .16em;
     color: #7a776f;
-    line-height: 1.9;
-    margin-bottom: 3.2rem;
+    line-height: 2;
   }
 
-  /* ── FORM ── */
+  /* ── RIGHT: form ── */
+  .contact-form-wrap {
+    flex: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 1.2s cubic-bezier(.22,1,.36,1) .65s forwards;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -144,12 +171,12 @@
     font-family: 'DM Mono', monospace;
     font-size: .56rem;
     letter-spacing: .28em;
-    color: #3a3834;
+    color: #6e6b63;
     text-transform: uppercase;
     padding-top: 1.4rem;
     transition: color .3s;
   }
-  .field:focus-within label { color: #7a776f; }
+  .field:focus-within label { color: #b0aca2; }
 
   .field input,
   .field select,
@@ -167,19 +194,12 @@
     padding: .4rem 0 1rem;
     resize: none;
   }
-
-  .field select {
-    appearance: none;
-    cursor: pointer;
-  }
+  .field select { appearance: none; cursor: pointer; }
   .field select option { background: #0a0a0a; }
-
   .field textarea { min-height: 100px; line-height: 1.6; }
-
   .field input::placeholder,
   .field textarea::placeholder { color: #3a3834; }
 
-  /* submit row */
   .form-footer {
     display: flex;
     justify-content: space-between;
@@ -192,7 +212,7 @@
     font-family: 'DM Mono', monospace;
     font-size: .56rem;
     letter-spacing: .16em;
-    color: #3a3834;
+    color: #5a574f;
     line-height: 1.8;
   }
 
@@ -207,7 +227,7 @@
     cursor: pointer;
     border: none;
     outline: none;
-    transition: background .25s, color .25s;
+    transition: background .3s, border-color .3s;
     white-space: nowrap;
   }
   .btn-solid {
@@ -217,40 +237,28 @@
   }
   .btn-solid:hover { background: #cdc7b8; border-color: #cdc7b8; }
 
-  /* success state */
+  /* success */
   .success-msg {
     display: none;
-    text-align: center;
     padding: 3rem 0;
   }
-  .success-msg .tick {
-    font-size: 2rem;
-    color: #cdc7b8;
-    margin-bottom: 1.2rem;
-    display: block;
-  }
-  .success-msg p {
-    font-size: 1.3rem;
-    font-weight: 300;
-    margin-bottom: .6rem;
-  }
-  .success-msg span {
-    font-family: 'DM Mono', monospace;
-    font-size: .6rem;
-    letter-spacing: .2em;
-    color: #7a776f;
-  }
+  .success-msg .tick { font-size: 2rem; color: #cdc7b8; margin-bottom: 1.2rem; display: block; }
+  .success-msg p { font-size: 1.3rem; font-weight: 300; margin-bottom: .6rem; }
+  .success-msg span { font-family: 'DM Mono', monospace; font-size: .6rem; letter-spacing: .2em; color: #7a776f; }
 
   /* corner labels */
   .corner-left, .corner-right {
     position: fixed;
-    bottom: 2rem;
+    bottom: 0;
     font-family: 'DM Mono', monospace;
     font-size: .9rem;
     letter-spacing: .2em;
     color: #7a776f;
     opacity: 0;
-    animation: fadeIn .8s 1.4s forwards;
+    animation: fadeIn 2s cubic-bezier(.22,1,.36,1) 1.4s forwards;
+    z-index: 2;
+    padding: 1rem 0;
+    border-top: 1px solid #1e1d1b;
   }
   .corner-left  { left: 2.4rem; }
   .corner-right { right: 2.4rem; }
@@ -258,9 +266,29 @@
   @keyframes ruleGrow { to { width: 100%; } }
   @keyframes fadeIn   { to { opacity: 1; } }
   @keyframes rise     { to { opacity: 1; transform: translateY(0); } }
+  @keyframes dotDrift { to { transform: translate(28px, 28px); } }
 
-  @media (max-width: 600px) {
-    nav { padding: 1.4rem 1.4rem; }
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    html, body { cursor: auto; }
+    #cursor { display: none; }
+    nav { padding: 1.4rem 1.6rem; }
+
+    .page {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 7rem 1.6rem 5rem;
+      gap: 3rem;
+    }
+
+    .contact-intro { flex: none; max-width: 100%; }
+
+    .eyebrow { color: #9a968e; }
+    .page-sub { color: #9a968e; }
+
+    .field label { color: #9a968e; }
+    .form-note { color: #7a776f; }
+
     .form-footer { flex-direction: column; align-items: flex-start; }
     .corner-left, .corner-right { display: none; }
   }
@@ -268,7 +296,7 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; }
     .rule-top, .rule-bottom { width: 100%; }
-    .contact-wrap, .nav-logo, .nav-back { opacity: 1; transform: none; }
+    .contact-intro, .contact-form-wrap, .nav-logo, .nav-back { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -284,28 +312,29 @@
 </nav>
 
 <div class="page">
-  <div class="contact-wrap">
+
+  <!-- LEFT -->
+  <div class="contact-intro">
     <span class="eyebrow">Get in touch</span>
     <h1 class="page-title">Begin with a<br><em>conversation.</em></h1>
     <p class="page-sub">All consultations are complimentary and without obligation.<br>We'll be in touch within 24 hours.</p>
+  </div>
 
+  <!-- RIGHT -->
+  <div class="contact-form-wrap">
     <form id="contact-form">
-
       <div class="field">
         <label for="name">Full name</label>
         <input type="text" id="name" name="name" placeholder="Your name" required>
       </div>
-
       <div class="field">
         <label for="email">Email address</label>
         <input type="email" id="email" name="email" placeholder="you@example.com" required>
       </div>
-
       <div class="field">
         <label for="phone">Phone (optional)</label>
         <input type="tel" id="phone" name="phone" placeholder="+44 7700 000000">
       </div>
-
       <div class="field">
         <label for="service">Service of interest</label>
         <select id="service" name="service" required>
@@ -316,12 +345,10 @@
           <option value="general">General Enquiry</option>
         </select>
       </div>
-
       <div class="field">
         <label for="message">Message</label>
         <textarea id="message" name="message" placeholder="Tell us a little about what you're looking for…" required></textarea>
       </div>
-
       <div class="form-footer">
         <p class="form-note">By submitting you agree to us<br>contacting you about your enquiry.</p>
         <button type="submit" class="btn btn-solid">Send Enquiry</button>
@@ -334,6 +361,7 @@
       <span>Expect a reply within 24 hours.</span>
     </div>
   </div>
+
 </div>
 
 <span class="corner-left">subtl.co.uk</span>
