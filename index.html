@@ -132,6 +132,52 @@
   }
   .btn:hover { background: #cdc7b8; border-color: #cdc7b8; }
 
+  /* background line pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(240,236,228,.03) 60px, rgba(240,236,228,.03) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(240,236,228,.03) 60px, rgba(240,236,228,.03) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* corner brackets */
+  .corner-bracket {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+  }
+  .corner-bracket::before,
+  .corner-bracket::after {
+    content: '';
+    position: absolute;
+    background: rgba(240,236,228,.12);
+  }
+  .corner-bracket::before { width: 1px; height: 100%; }
+  .corner-bracket::after  { width: 100%; height: 1px; }
+
+  .cb-tl { top: 2rem; left: 2rem; }
+  .cb-tl::before { top: 0; left: 0; }
+  .cb-tl::after  { top: 0; left: 0; }
+
+  .cb-tr { top: 2rem; right: 2rem; }
+  .cb-tr::before { top: 0; right: 0; left: auto; }
+  .cb-tr::after  { top: 0; right: 0; }
+
+  .cb-bl { bottom: 2rem; left: 2rem; }
+  .cb-bl::before { bottom: 0; top: auto; left: 0; }
+  .cb-bl::after  { bottom: 0; top: auto; left: 0; }
+
+  .cb-br { bottom: 2rem; right: 2rem; }
+  .cb-br::before { bottom: 0; top: auto; right: 0; left: auto; }
+  .cb-br::after  { bottom: 0; top: auto; right: 0; }
+
   @keyframes ruleGrow { to { width: 100%; } }
   @keyframes fadeIn   { to { opacity: 1; } }
   @keyframes rise     { to { opacity: 1; transform: translateY(0); } }
@@ -148,6 +194,10 @@
 <div id="cursor"></div>
 <div class="rule-top"></div>
 <div class="rule-bottom"></div>
+<div class="corner-bracket cb-tl"></div>
+<div class="corner-bracket cb-tr"></div>
+<div class="corner-bracket cb-bl"></div>
+<div class="corner-bracket cb-br"></div>
 
 <div class="stage">
   <p class="logo">s u b t l .</p>
